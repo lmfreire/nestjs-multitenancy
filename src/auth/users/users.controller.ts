@@ -13,4 +13,10 @@ export class UsersController {
         const user = await this.usersService.createCommonUser(data)
         return new UserPresenter(user);
     }
+
+    @Get()
+    async findMany(){
+        return this.usersService.findAll()
+    }
+
 }

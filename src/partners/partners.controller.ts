@@ -17,10 +17,10 @@ export class PartnersController {
     });
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.partnersService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.partnersService.findAll();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {
