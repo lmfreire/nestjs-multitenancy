@@ -23,4 +23,27 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@unique([email])
+  PartnerUser PartnerUser[]
+}
+
+
+model Partner{
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  PartnerUser PartnerUser[]
+}
+
+model PartnerUser{
+  id Int @id @default(autoincrement())
+  partnerId Int
+  userId Int
+  Partner Partner @relation(fields: [partnerId], references: [id])
+  User User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId])
 }
