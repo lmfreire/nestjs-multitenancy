@@ -9,12 +9,22 @@ export class UsersService {
 
     constructor(private prismaService: PrismaService){}
 
-    create(data: CreateUserDto){
+    createPartnerUser(data: CreateUserDto){
         return this.prismaService.user.create({
             data: {
                 ...data,
                 password: this.generateHash(data.password),
                 roles: [UserRoles.PARTNER]
+            }
+        })
+    }
+
+    createCommonUser(data: CreateUserDto){
+        return this.prismaService.user.create({
+            data: {
+                ...data,
+                password: this.generateHash(data.password),
+                roles: [UserRoles.USER]
             }
         })
     }
