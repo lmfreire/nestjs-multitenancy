@@ -11,17 +11,22 @@ export class PartnersService {
   ){}
 
   async create(createPartnerDto: CreatePartnerDto & {userId: number}) {
-    
-    const partner = await this.prismaService.partner.create({
-      data: {name: createPartnerDto.name}
-    });
 
-    await this.prismaService.partnerUser.create({
-      data: {
-        partnerId: partner.id, 
-        userId: createPartnerDto.userId
-      }
-    })
+    const partner = this.prismaService.$transaction(async (prisma) => {
+
+      const partner = await prisma.partner.create({
+        data: {name: createPartnerDto.name}
+      });
+  
+      await prisma.partnerUser.create({
+        data: {
+          partnerId: partner.id, 
+          userId: createPartnerDto.userId
+        }
+      })
+
+      return partner
+    })   
 
     return partner
   }
